@@ -9,12 +9,16 @@ public class BankClient {
     private static final Logger LOG = LoggerFactory.getLogger(BankClient.class);
 
     private int current = -1;
-    private Scanner scanner;
+    private final Scanner scanner;
     private boolean done = false;
-    private Bank bank = new Bank();
+    private final Bank bank;
+
+    public BankClient(Scanner scanner, Bank bank) {
+        this.bank = bank;
+        this.scanner = scanner;
+    }
 
     public void run() {
-        scanner = new Scanner(System.in);
 
         while (!done) {
             LOG.info("Enter command (\n\t0=quit \n\t1=new \n\t2=select " +
