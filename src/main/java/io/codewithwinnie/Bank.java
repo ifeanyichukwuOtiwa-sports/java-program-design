@@ -10,31 +10,36 @@ import org.slf4j.LoggerFactory;
 public class Bank {
 
     private static final Logger LOG = LoggerFactory.getLogger(BankProgram.class);
-    private final Map<Integer, Integer> accounts = new HashMap<>();
+    private final Map<Integer, BankAccount> accounts = new HashMap<>();
 
     private final double rate = 0.01;
     private int nextAcct = 0;
 
-    public int newAccount() {
+    public int newAccount(final boolean isForeign) {
         int acctNum = nextAcct++;
-        accounts.put(acctNum, 0);
+        final BankAccount bankAccount = new BankAccount(acctNum);
+        bankAccount.setForeign(isForeign);
+        accounts.put(acctNum, bankAccount);
         LOG.info("Your new account number is {}", acctNum);
         return acctNum;
     }
 
     public int getBalance(final int accountNumber) {
-        int balance = accounts.get(accountNumber);
+        final BankAccount bankAccount = accounts.get(accountNumber);
+        int balance = bankAccount.getBalance();
         LOG.info("Your balance is {}", balance);
         return balance;
     }
 
     public void deposit(final int acctNum, final int amt) {
-        int balance = accounts.get(acctNum);
-        accounts.put(acctNum, balance + amt);
+        final BankAccount bankAccount = accounts.get(acctNum);
+        int balance = bankAccount.getBalance();
+        bankAccount.setBalance(balance + amt);
     }
 
     public boolean authorizeLoan(final int loanAmt, final int accNum) {
-        int balance = accounts.get(accNum);
+        final BankAccount bankAccount = accounts.get(accNum);
+        int balance = bankAccount.getBalance();
         return (balance >= loanAmt / 2);
     }
 
@@ -48,14 +53,17 @@ public class Bank {
         return result.toString();
     }
 
+    public void setForeign(int acctnum, boolean isforeign) {
+        BankAccount ba = accounts.get(acctnum);
+        ba.setForeign(isforeign);
+    }
 
     public void addInterest() {
-        Set<Integer> acct = accounts.keySet();
 
-        for (Integer a: acct) {
-            int balance = accounts.get(a);
+        for (BankAccount bankAccount: accounts.values()) {
+            int balance = bankAccount.getBalance();
             int newBalance = (int) (balance + (rate * balance));
-            accounts.put(a, newBalance);
+            bankAccount.setBalance(newBalance);
         }
     }
 }
