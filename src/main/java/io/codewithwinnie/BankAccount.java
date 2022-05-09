@@ -17,6 +17,8 @@ public interface BankAccount {
 
     boolean hasEnoughCollateral(int loanAmt);
 
+    void addInterest();
+
     @Override
     String toString();
 }

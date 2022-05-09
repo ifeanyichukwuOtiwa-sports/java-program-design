@@ -57,6 +57,11 @@ public class CheckingBankAccount implements BankAccount {
     }
 
     @Override
+    public void addInterest() {
+        // addInterest() for a checking account is just to improve transparency of
+    }
+
+    @Override
     public String toString() {
         return "Checkings account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" : "Domestic");
     }

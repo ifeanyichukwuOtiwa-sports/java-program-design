@@ -5,6 +5,8 @@ public class SavingsBankAccount implements BankAccount {
     private int balance;
     private boolean isForeign;
 
+    private final double rate = 0.1;
+
     public SavingsBankAccount(final int accountNumber) {
         this.accountNumber = accountNumber;
     }
@@ -47,6 +49,11 @@ public class SavingsBankAccount implements BankAccount {
     @Override
     public boolean hasEnoughCollateral(final int loanAmt) {
         return (balance >= loanAmt / 2);
+    }
+
+    @Override
+    public void addInterest() {
+        addInterest(rate);
     }
 
     public void addInterest(final double rate) {

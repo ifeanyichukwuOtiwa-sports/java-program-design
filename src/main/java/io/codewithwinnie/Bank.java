@@ -67,9 +67,9 @@ public class Bank {
     public void addInterest() {
 
         for (BankAccount bankAccount: accounts.values()) {
+            bankAccount.addInterest();
             if (bankAccount instanceof  SavingsBankAccount) {
                 SavingsBankAccount sa = (SavingsBankAccount) bankAccount;
-                sa.addInterest(rate);
             }
         }
     }
