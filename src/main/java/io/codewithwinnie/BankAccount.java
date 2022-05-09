@@ -1,52 +1,22 @@
 package io.codewithwinnie;
 
-public class BankAccount {
-    private int accountNumber;
-    private int balance;
-    private boolean isForeign;
+public interface BankAccount {
+    int getAccountNumber();
 
-    public BankAccount(final int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+    int getBalance();
 
-    public int getAccountNumber() {
-        return accountNumber;
-    }
+    boolean isForeign();
 
-    public int getBalance() {
-        return balance;
-    }
+    void setBalance(int balance);
 
-    public boolean isForeign() {
-        return isForeign;
-    }
+    void setAccountNumber(int accountNumber);
 
-    public void setBalance(final int balance) {
-        this.balance = balance;
-    }
+    void setForeign(boolean foreign);
 
-    public void setAccountNumber(final int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+    void deposit(int amt);
 
-    public void setForeign(final boolean foreign) {
-        isForeign = foreign;
-    }
-
-    public void deposit(int amt) {
-        balance += amt;
-    }
-
-    public boolean hasEnoughCollateral(final int loanAmt) {
-        return (balance >= loanAmt / 2);
-    }
-
-    public void addInterest(final double rate) {
-        balance *= (int) (rate + 1);
-    }
+    boolean hasEnoughCollateral(int loanAmt);
 
     @Override
-    public String toString() {
-        return "Bank account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" : "Domestic");
-    }
+    String toString();
 }

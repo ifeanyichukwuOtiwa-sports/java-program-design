@@ -10,7 +10,7 @@ public class Bank {
     private static final Logger LOG = LoggerFactory.getLogger(Bank.class);
     private final Map<Integer, BankAccount> accounts;
 
-    private final double rate = 0.01;
+    private final double rate = 0.1;
     private int nextAcct = 0;
 
     public Bank(final Map<Integer, BankAccount> accounts, final int nextAcct) {
@@ -18,9 +18,15 @@ public class Bank {
         this.nextAcct = nextAcct;
     }
 
-    public int newAccount(final boolean isForeign) {
+    public int newAccount(final Integer type, final boolean isForeign) {
         int acctNum = nextAcct++;
-        final BankAccount bankAccount = new BankAccount(acctNum);
+
+        BankAccount bankAccount;
+        if (type == 1) {
+            bankAccount = new SavingsBankAccount(acctNum);
+        } else {
+            bankAccount = new CheckingBankAccount(acctNum);
+        }
         bankAccount.setForeign(isForeign);
         accounts.put(acctNum, bankAccount);
         LOG.info("Your new account number is {}", acctNum);
@@ -45,7 +51,7 @@ public class Bank {
     }
 
     public String toString() {
-        StringBuilder result = new StringBuilder("The bank has accounts." + accounts.size());
+        StringBuilder result = new StringBuilder("The bank has accounts:" + accounts.size());
 
         for (BankAccount bankAccount: accounts.values()) {
             result.append("\n\t").append(bankAccount.toString());
@@ -61,7 +67,10 @@ public class Bank {
     public void addInterest() {
 
         for (BankAccount bankAccount: accounts.values()) {
-            bankAccount.addInterest(rate);
+            if (bankAccount instanceof  SavingsBankAccount) {
+                SavingsBankAccount sa = (SavingsBankAccount) bankAccount;
+                sa.addInterest(rate);
+            }
         }
     }
 }
