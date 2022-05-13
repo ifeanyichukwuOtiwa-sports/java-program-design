@@ -1,6 +1,6 @@
 package io.codewithwinnie;
 
-public interface BankAccount {
+public interface BankAccount extends Comparable<BankAccount> {
     int getAccountNumber();
 
     int getBalance();

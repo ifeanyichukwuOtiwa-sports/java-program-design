@@ -1,6 +1,6 @@
 package io.codewithwinnie;
 
-public class SavingsBankAccount implements BankAccount, Comparable<BankAccount>{
+public class SavingsBankAccount implements BankAccount {
     private int accountNumber;
     private int balance;
     private boolean isForeign;

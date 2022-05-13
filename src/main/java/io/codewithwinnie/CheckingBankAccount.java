@@ -5,7 +5,7 @@ package io.codewithwinnie;
  * 09/05/2022
  */
 
-public class CheckingBankAccount implements BankAccount, Comparable<BankAccount> {
+public class CheckingBankAccount implements BankAccount {
 
     private int accountNumber;
     private int balance;
