@@ -11,7 +11,6 @@ public class Bank {
     private static final Logger LOG = LoggerFactory.getLogger(Bank.class);
     private final Map<Integer, BankAccount> accounts;
 
-    private final double rate = 0.1;
     private int nextAcct = 0;
 
     public Bank(final Map<Integer, BankAccount> accounts, final int nextAcct) {
@@ -25,8 +24,10 @@ public class Bank {
         BankAccount bankAccount;
         if (type == 1) {
             bankAccount = new SavingsBankAccount(acctNum);
-        } else {
+        } else if (type == 2) {
             bankAccount = new CheckingBankAccount(acctNum);
+        } else {
+            bankAccount = new InterestCheckingBankAccount(acctNum);
         }
         bankAccount.setForeign(isForeign);
         accounts.put(acctNum, bankAccount);

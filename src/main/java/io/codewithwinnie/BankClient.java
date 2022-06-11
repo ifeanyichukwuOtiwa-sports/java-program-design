@@ -93,19 +93,14 @@ public class BankClient {
 
     private void newAccount() {
         boolean isForeign = requestForeign();
-        boolean type  = requestType();
-        if (type) {
-            current = bank.newAccount(1, isForeign);
-        } else {
-            current = bank.newAccount(2, isForeign);
-        }
+        int type  = requestType();
+        current = bank.newAccount(1, isForeign);
         System.out.println("Your new account Number is " + current );
     }
 
-    private boolean requestType() {
-        System.out.println("Enter \n\t1 Savings\n\t2 Checking");
-        int val = scanner.nextInt();
-        return val == 1;
+    private int requestType() {
+        System.out.println("Enter \n\t1 Savings\n\t2 Checking\n\t3 InterestChecking");
+        return scanner.nextInt();
     }
 
 
