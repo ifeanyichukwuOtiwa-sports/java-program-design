@@ -94,7 +94,7 @@ public class BankClient {
     private void newAccount() {
         boolean isForeign = requestForeign();
         int type  = requestType();
-        current = bank.newAccount(1, isForeign);
+        current = bank.newAccount(type, isForeign);
         System.out.println("Your new account Number is " + current );
     }
 

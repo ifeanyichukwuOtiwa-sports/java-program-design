@@ -16,7 +16,8 @@ public class InterestCheckingBankAccount extends CheckingBankAccount{
 
     @Override
     public String toString() {
-        return "Savings account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" : "Domestic");
+        return "Interest Checkings account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" :
+                "Domestic");
     }
 
     @Override
