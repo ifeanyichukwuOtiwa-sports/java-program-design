@@ -1,6 +1,7 @@
 package io.codewithwinnie;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,6 @@ public class Bank {
     private static final Logger LOG = LoggerFactory.getLogger(Bank.class);
     private final Map<Integer, BankAccount> accounts;
 
-    private final double rate = 0.1;
     private int nextAcct = 0;
 
     public Bank(final Map<Integer, BankAccount> accounts, final int nextAcct) {
@@ -24,8 +24,10 @@ public class Bank {
         BankAccount bankAccount;
         if (type == 1) {
             bankAccount = new SavingsBankAccount(acctNum);
+        } else if (type == 2) {
+            bankAccount = new RegularCheckingBankAccount(acctNum);
         } else {
-            bankAccount = new CheckingBankAccount(acctNum);
+            bankAccount = new InterestCheckingBankAccount(acctNum);
         }
         bankAccount.setForeign(isForeign);
         accounts.put(acctNum, bankAccount);
@@ -68,9 +70,16 @@ public class Bank {
 
         for (BankAccount bankAccount: accounts.values()) {
             bankAccount.addInterest();
-            if (bankAccount instanceof  SavingsBankAccount) {
-                SavingsBankAccount sa = (SavingsBankAccount) bankAccount;
-            }
         }
+    }
+
+    public Map<Integer, BankAccount> getAccounts() {
+        return accounts.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public int getNextAcct() {
+        return nextAcct;
     }
 }

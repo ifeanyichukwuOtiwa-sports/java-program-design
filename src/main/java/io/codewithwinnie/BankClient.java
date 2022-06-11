@@ -19,13 +19,22 @@ public class BankClient {
     }
 
     public void run() {
-
         while (!done) {
-            LOG.info("Enter command (\n\t0=quit \n\t1=new \n\t2=select " +
-                    "\n\t3=deposit \n\t4=loan \n\t5=show \n\t6=interest \n\t7=Set Foreign\n): ");
-            int cmd = scanner.nextInt();
-            processCommand(cmd);
+            if(bank.getAccounts().size() > 0 && bank.getNextAcct() > 0) {
+                LOG.info("Enter command (\n\t0=quit \n\t1=new \n\t2=select " +
+                        "\n\t3=deposit \n\t4=loan \n\t5=show \n\t6=interest \n\t7=Set Foreign\n): ");
+                int cmd = scanner.nextInt();
+                processCommand(cmd);
+
+            } else {
+                LOG.info("No accounts yet");
+                LOG.info("Enter command (\n\t0=quit \n\t1=new");
+                int cmd = scanner.nextInt();
+                processCommand(cmd);
+
+            }
         }
+
         scanner.close();
     }
 
@@ -84,19 +93,14 @@ public class BankClient {
 
     private void newAccount() {
         boolean isForeign = requestForeign();
-        boolean type  = requestType();
-        if (type) {
-            current = bank.newAccount(1, isForeign);
-        } else {
-            current = bank.newAccount(2, isForeign);
-        }
+        int type  = requestType();
+        current = bank.newAccount(type, isForeign);
         System.out.println("Your new account Number is " + current );
     }
 
-    private boolean requestType() {
-        System.out.println("Enter \n\t1 Savings\n\t2 Checking");
-        int val = scanner.nextInt();
-        return val == 1;
+    private int requestType() {
+        System.out.println("Enter \n\t1 Savings\n\t2 Regular Checking\n\t3 Interest Checking");
+        return scanner.nextInt();
     }
 
 
