@@ -1,6 +1,7 @@
 package io.codewithwinnie;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,16 @@ public class Bank {
 
         for (BankAccount bankAccount: accounts.values()) {
             bankAccount.addInterest();
-            if (bankAccount instanceof  SavingsBankAccount) {
-                SavingsBankAccount sa = (SavingsBankAccount) bankAccount;
-            }
         }
+    }
+
+    public Map<Integer, BankAccount> getAccounts() {
+        return accounts.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public int getNextAcct() {
+        return nextAcct;
     }
 }

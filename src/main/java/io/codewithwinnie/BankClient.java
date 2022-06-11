@@ -19,13 +19,22 @@ public class BankClient {
     }
 
     public void run() {
-
         while (!done) {
-            LOG.info("Enter command (\n\t0=quit \n\t1=new \n\t2=select " +
-                    "\n\t3=deposit \n\t4=loan \n\t5=show \n\t6=interest \n\t7=Set Foreign\n): ");
-            int cmd = scanner.nextInt();
-            processCommand(cmd);
+            if(bank.getAccounts().size() > 0 && bank.getNextAcct() > 0) {
+                LOG.info("Enter command (\n\t0=quit \n\t1=new \n\t2=select " +
+                        "\n\t3=deposit \n\t4=loan \n\t5=show \n\t6=interest \n\t7=Set Foreign\n): ");
+                int cmd = scanner.nextInt();
+                processCommand(cmd);
+
+            } else {
+                LOG.info("No accounts yet");
+                LOG.info("Enter command (\n\t0=quit \n\t1=new");
+                int cmd = scanner.nextInt();
+                processCommand(cmd);
+
+            }
         }
+
         scanner.close();
     }
 
