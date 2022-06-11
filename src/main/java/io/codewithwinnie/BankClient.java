@@ -99,7 +99,7 @@ public class BankClient {
     }
 
     private int requestType() {
-        System.out.println("Enter \n\t1 Savings\n\t2 Checking\n\t3 InterestChecking");
+        System.out.println("Enter \n\t1 Savings\n\t2 Regular Checking\n\t3 Interest Checking");
         return scanner.nextInt();
     }
 

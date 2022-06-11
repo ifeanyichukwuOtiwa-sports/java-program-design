@@ -5,9 +5,9 @@ package io.codewithwinnie;
  * 09/05/2022
  */
 
-public class CheckingBankAccount extends  AbstractBankAccount {
+public abstract class CheckingBankAccount extends  AbstractBankAccount {
 
-    public CheckingBankAccount(Integer acctNumber) {
+    protected CheckingBankAccount(Integer acctNumber) {
         super(acctNumber);
         this.accountNumber = acctNumber;
     }
@@ -17,13 +17,5 @@ public class CheckingBankAccount extends  AbstractBankAccount {
         return balance >= ((2 * loanAmt) / 3);
     }
 
-    @Override
-    public void addInterest() {
-        // addInterest() for a checking account is just to improve transparency of
-    }
-
-    @Override
-    public String toString() {
-        return "Checkings account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" : "Domestic");
-    }
+    public abstract String toString();
 }
