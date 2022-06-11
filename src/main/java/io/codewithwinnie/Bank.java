@@ -11,15 +11,15 @@ public class Bank {
     private static final Logger LOG = LoggerFactory.getLogger(Bank.class);
     private final Map<Integer, BankAccount> accounts;
 
-    private int nextAcct = 0;
+    private int nextAcctNum = 0;
 
-    public Bank(final Map<Integer, BankAccount> accounts, final int nextAcct) {
+    public Bank(final Map<Integer, BankAccount> accounts, final int nextAcctNum) {
         this.accounts = accounts;
-        this.nextAcct = nextAcct;
+        this.nextAcctNum = nextAcctNum;
     }
 
     public int newAccount(final Integer type, final boolean isForeign) {
-        int acctNum = nextAcct++;
+        int acctNum = nextAcctNum++;
 
         BankAccount bankAccount;
         if (type == 1) {
@@ -79,7 +79,7 @@ public class Bank {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public int getNextAcct() {
-        return nextAcct;
+    public int getNextAcctNum() {
+        return nextAcctNum;
     }
 }
