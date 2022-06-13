@@ -72,6 +72,26 @@ public abstract class AbstractBankAccount implements BankAccount {
         if (balance != that.getBalance()) return false;
         return accountNumber != that.getAccountNumber();
     }
-    public abstract String toString();
+
+    @Override
+    public boolean hasEnoughCollateral(final int loanAmt) {
+        double ratio = collateralRatio();
+        return balance >= loanAmt * ratio;
+    }
+
+    public String toString() {
+        return getAccountType() + " account " + accountNumber + " Balance: " + balance + " Foreign: " + isForeign;
+    }
+
+    @Override
+    public void addInterest() {
+        balance += balance * interestRate();
+    }
+
+    protected abstract double interestRate();
+
+    protected abstract double collateralRatio();
+
+    protected abstract String getAccountType();
 
 }
