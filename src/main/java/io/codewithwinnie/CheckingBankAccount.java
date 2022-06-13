@@ -17,5 +17,9 @@ public abstract class CheckingBankAccount extends  AbstractBankAccount {
         return balance >= ((2 * loanAmt) / 3);
     }
 
-    public abstract String toString();
+
+    @Override
+    protected double collateralRatio() {
+        return 2.0 / 3.0;
+    }
 }

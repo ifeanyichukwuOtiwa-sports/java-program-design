@@ -14,15 +14,14 @@ public class InterestCheckingBankAccount extends CheckingBankAccount{
         super(acctNumber);
     }
 
+
     @Override
-    public String toString() {
-        return "Interest Checkings account " + accountNumber + " : balance = " + balance + " is " + (isForeign ? "Foreign" :
-                "Domestic");
+    protected double interestRate() {
+        return RATE;
     }
 
     @Override
-    public void addInterest() {
-        int newBalance = (int) (balance * RATE);
-        deposit(newBalance);
+    protected String getAccountType() {
+        return "Interest Checking";
     }
 }
