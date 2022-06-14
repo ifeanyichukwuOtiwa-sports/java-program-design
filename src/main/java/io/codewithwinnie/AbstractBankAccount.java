@@ -10,6 +10,8 @@ public abstract class AbstractBankAccount implements BankAccount {
     protected int balance = 0;
     protected boolean isForeign = false;
 
+    private OwnerStrategy ownerStrategy = new Domestic();
+
 
     protected AbstractBankAccount(final int accountNumber) {
         this.accountNumber = accountNumber;
@@ -24,7 +26,7 @@ public abstract class AbstractBankAccount implements BankAccount {
     }
 
     public boolean isForeign() {
-        return isForeign;
+        return ownerStrategy.isForeign();
     }
 
     public void setBalance(final int balance) {
@@ -36,11 +38,15 @@ public abstract class AbstractBankAccount implements BankAccount {
     }
 
     public void setForeign(final boolean foreign) {
-        isForeign = foreign;
+        this.ownerStrategy = foreign ? new Foreign() : new Domestic();
     }
 
     public void deposit(int amt) {
         balance += amt;
+    }
+
+    public int fee() {
+        return ownerStrategy.fee();
     }
 
     @Override
@@ -80,7 +86,8 @@ public abstract class AbstractBankAccount implements BankAccount {
     }
 
     public String toString() {
-        return getAccountType() + " account " + accountNumber + " Balance: " + balance + " Foreign: " + isForeign;
+        return getAccountType() + " account " + accountNumber + " Balance: " + balance + " Foreign: " + ownerStrategy.isForeign()
+                + " Fee: " + ownerStrategy.fee();
     }
 
     @Override
