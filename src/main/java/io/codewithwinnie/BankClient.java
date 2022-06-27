@@ -5,6 +5,16 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.codewithwinnie.commandstrategy.impl.AddInterestCmd;
+import io.codewithwinnie.commandstrategy.impl.AuthorizeLoanCmd;
+import io.codewithwinnie.commandstrategy.impl.DepositCmd;
+import io.codewithwinnie.commandstrategy.impl.NewCmd;
+import io.codewithwinnie.commandstrategy.impl.QuitCmd;
+import io.codewithwinnie.commandstrategy.impl.SelectCmd;
+import io.codewithwinnie.commandstrategy.impl.SetForeignCmd;
+import io.codewithwinnie.commandstrategy.impl.ShowAllCmd;
+import io.codewithwinnie.commandstrategy.intface.InputCommand;
+
 public class BankClient {
     private static final Logger LOG = LoggerFactory.getLogger(BankClient.class);
 
@@ -12,6 +22,16 @@ public class BankClient {
     private final Scanner scanner;
     private boolean done = false;
     private final Bank bank;
+    private static final InputCommand[] commands = {
+            new QuitCmd(),
+            new NewCmd(),
+            new SelectCmd(),
+            new DepositCmd(),
+            new AuthorizeLoanCmd(),
+            new ShowAllCmd(),
+            new AddInterestCmd(),
+            new SetForeignCmd()
+    };
 
     public BankClient(Scanner scanner, Bank bank) {
         this.bank = bank;
@@ -38,36 +58,37 @@ public class BankClient {
         scanner.close();
     }
 
-    private void processCommand(final int cmd) {
-        if (cmd == 0) quit();
-        else if (cmd == 1) newAccount();
-        else if (cmd == 2) select();
-        else if (cmd == 3) deposit();
-        else if (cmd == 4) authorizeLoan();
-        else if (cmd == 5) showAll();
-        else if (cmd == 6) addInterest();
-        else if (cmd == 7) setForeign();
-        else LOG.info("Illegal Command");
+    private void processCommand(final int cnum) {
+        InputCommand cmd = commands[cnum];
+        current = cmd.execute(scanner, bank, current);
+        if (current < 0) {
+            done = true;
+        }
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void setForeign() {
         bank.setForeign(current, requestForeign());
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private boolean requestForeign() {
         System.out.println("Enter \n\t1 for Foreign\n\t2 for domestic");
         int val = scanner.nextInt();
         return val == 1;
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void addInterest() {
         bank.addInterest();
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void showAll() {
         System.out.println(bank.toString());
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void authorizeLoan() {
         LOG.info("Enter loan amount: ");
         int loanAmt = scanner.nextInt();
@@ -77,6 +98,10 @@ public class BankClient {
             LOG.info("Your loan is denied");
     }
 
+    /**
+     * replaced with @link{DepositCmd}
+     */
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void deposit() {
         System.out.println("Enter Deposit Amount: ");
         int amt = scanner.nextInt();
@@ -84,6 +109,7 @@ public class BankClient {
         System.out.println("Credit Alert\nYour current balance is " + bank.getBalance(current));
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void select() {
         System.out.println("Enter account number: ");
         current = scanner.nextInt();
@@ -91,6 +117,7 @@ public class BankClient {
         System.out.println("the balance of " + current + " is " + balance);
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void newAccount() {
         boolean isForeign = requestForeign();
         int type  = requestType();
@@ -98,12 +125,14 @@ public class BankClient {
         System.out.println("Your new account Number is " + current );
     }
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private int requestType() {
         System.out.println("Enter \n\t1 Savings\n\t2 Regular Checking\n\t3 Interest Checking");
         return scanner.nextInt();
     }
 
 
+    @Deprecated(forRemoval = true, since = "BP-10010")
     private void quit() {
         done = true;
         LOG.info("Good Bye!");
